@@ -1,0 +1,23 @@
+ <div class="row">
+     <div class="col-md-8 pagination">
+         <span>共 <b>{{totalEle}}</b> 条，每页显示</span>
+         <span class="dropdown">
+             <button class="btn btn-default dropdown-toggle" type="button" id="paginationSlicer" data-toggle="dropdown">
+                 {{slicerNum}}
+                 <span class="caret"></span>
+              </button>
+           	<ul class="dropdown-menu" role="menu" aria-labelledby="paginationSlicer">
+               <li role="presentation" ng-repeat="i in slicer" ng-click="slctSlicer(i)"><a role="menuitem" tabindex="-1" href="#">{{i}}</a></li>
+            </ul>
+         </span>
+         <span>条</span>
+     </div>
+     <div class="col-md-4">
+      <ul class="pagination  pull-right top">
+         <li ng-click="clickPageNum(currPage-1)" ng-class="{disabled:currPage==0}"><a>&laquo;</a></li>
+         <li ng-repeat="i in pageNums" ng-click="clickPageNum(i-1)"><a ng-class="{active:currPage==(i-1)}">{{i}}</a></li>
+         <li ng-if="pageNums.length==0" ng-click="clickPageNum(0)"><a class="current">1</a></li>
+         <li ng-click="clickPageNum(currPage+1)"ng-class="{disabled:currPage==totalPage-1}"><a>&raquo;</a></li>
+     </ul>
+     </div>
+ </div>

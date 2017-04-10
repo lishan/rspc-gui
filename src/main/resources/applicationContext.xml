@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
+       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+    <!-- 注解编程 -->
+    <context:annotation-config/>
+    <task:annotation-driven/>
+    <!-- 自动扫描文件 -->
+    <context:component-scan base-package="modules">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.RequestMapping"/>
+    </context:component-scan>
+
+    <!--启用@AspectJ支持	 需要 aspectjweaver.jar和aspectjrt.jar-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <util:properties id="config" location="classpath:property/config.properties"
+            scope="singleton" />
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="concurrentRefresh" value="true"></property>
+        <property name="defaultEncoding" value="gbk" />
+        <property name="cacheSeconds" value="60"></property>
+        <!-- 国际化信息所在的文件名 -->
+        <property name="basename" value="classpath:property/messages" />
+        <!-- 如果在国际化资源文件中找不到对应代码的信息，就用这个代码作为名称  -->
+        <!--<property name="useCodeAsDefaultMessage" value="true" />-->
+    </bean>
+    <!--shiro-->
+    <import resource="shiro.xml"/>
+    <!--redis-->
+    <!--<import resource="spring-redis.xml" />-->
+    <!--线程池-->
+    <import resource="threadPool.xml"/>
+    <!--Spring Cache-->
+    <import resource="cache/springCache.xml"/>
+</beans>

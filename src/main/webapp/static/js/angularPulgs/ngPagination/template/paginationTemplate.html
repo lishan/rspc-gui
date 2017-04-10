@@ -1,0 +1,12 @@
+<div>
+
+    <ul class="pagination" style="float: right">
+        <li><a style="border: none">{{currPage+1}}/{{totalPage}}</a></li>
+        <li ng-click="clickPageNum(0)" ng-class="{disabled:currPage==0}"><a class="btn">&lt;&lt;</a></li>
+        <li ng-click="clickPageNum(currPage-1)" ng-class="{disabled:currPage==0}"><a class="btn">&lt;</a></li>
+        <li ng-repeat="i in pageNums"  ng-class="{active:currPage==(i-1)}" ng-click="clickPageNum(i-1)"><a class="btn">{{i}}</a></li>
+        <li ng-if="pageNums.length==0" ng-click="clickPageNum(0)"><a class="btn current">1</a></li>
+        <li ng-click="clickPageNum(currPage+1)" ng-class="{disabled:currPage==totalPage-1}"><a class="btn">&gt;</a></li>
+        <li ng-click="clickPageNum(totalPage)" ng-class="{disabled:currPage==totalPage-1}"><a class="btn">&gt;&gt;</a></li>
+    </ul>
+</div>

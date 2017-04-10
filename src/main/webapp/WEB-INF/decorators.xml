@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/layouts/">
+	<excludes>
+		<pattern>*/login.jsp*</pattern>
+		<pattern>*/admin/user/toLogin*</pattern>
+		<pattern>*/login/logout.action</pattern>
+		<pattern>/static/*</pattern>
+		<pattern>*/ajax/*</pattern>
+	</excludes>
+	<!--<decorator name="springMVCWX" page="wx/default.jsp">-->
+		<!--<pattern>/wx/*</pattern>-->
+	<!--</decorator>-->
+	<decorator name="wx3p" page="default.jsp">
+		<pattern>*</pattern>
+	</decorator>
+	<decorator name="rspc" page="rspc/default.jsp">
+		<pattern>/rspc/*</pattern>
+	</decorator>
+</decorators>
