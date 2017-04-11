@@ -91,6 +91,9 @@
         <!-- Unnamed (Ellipse) -->
         <div id="u58" class="ax_default marker">
             <img id="u58_img" class="img " src="${ctx}/static/rspc/dashBoard/img/u46.png"/>
+            <div id="u59" class="text">
+                <p><span><spring:message code="dashBoard.outData"/></span></p>
+            </div>
         </div>
 
         <!-- Unnamed (Horizontal Line) -->
