@@ -10,9 +10,10 @@
 #u42 {
   border-width:0px;
   position:absolute;
-  left:185px;
+  margin: auto;
+  padding-left: 80px;
   top:428px;
-  width:621px;
+  width:1021px;
   height:262px;
 }
 #u43 {

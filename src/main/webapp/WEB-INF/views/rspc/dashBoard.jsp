@@ -79,56 +79,40 @@
         <div id="u54" class="ax_default arrow">
 
             <img id="u54_img" ng-if="!isRunnion" class="img" ng-src="${ctx}/static/rspc/dashBoard/img/u54.png"/>
-            <img id="u54_img" ng-if="isRunnion" class="img gifImg" ng-src="${ctx}/static/rspc/dashBoard/img/135fe.gif"/>
-            <!-- Unnamed () -->
-            <div id="u55" class="text" style="display:none; visibility: hidden">
-                <p><span></span></p>
-            </div>
+            <img id="u54_img" style="z-index: -1;width: 108px" ng-if="isRunnion" class="img gifImg" ng-src="${ctx}/static/rspc/dashBoard/img/gif031.gif"/>
         </div>
 
         <!-- Unnamed (Horizontal Line) -->
         <div id="u56" class="ax_default arrow">
             <img id="u56_img" ng-if="!isRunnion" class="img" ng-src="${ctx}/static/rspc/dashBoard/img/u56.png"/>
-            <img id="u56_img" ng-if="isRunnion" class="img gifImg" ng-src="${ctx}/static/rspc/dashBoard/img/135fe.gif"/>
-            <!-- Unnamed () -->
-            <div id="u57" class="text" style="display:none; visibility: hidden">
-                <p><span></span></p>
-            </div>
+            <img id="u56_img" style="z-index: -1;width: 108px" ng-if="isRunnion" class="img gifImg" ng-src="${ctx}/static/rspc/dashBoard/img/gif031.gif"/>
         </div>
 
         <!-- Unnamed (Ellipse) -->
         <div id="u58" class="ax_default marker">
             <img id="u58_img" class="img " src="${ctx}/static/rspc/dashBoard/img/u46.png"/>
-            <!-- Unnamed () -->
-            <div id="u59" class="text">
-                <p><span><spring:message code="dashBoard.outData"/></span></p>
-            </div>
         </div>
 
         <!-- Unnamed (Horizontal Line) -->
         <div id="u60" class="ax_default arrow">
             <img id="u60_img" ng-if="!isRunnion" class="img" ng-src="${ctx}/static/rspc/dashBoard/img/u60.png"/>
-            <img id="u60_img" ng-if="isRunnion" class="img gifImg" ng-src="${ctx}/static/rspc/dashBoard/img/135fe.gif"/>
-            <!-- Unnamed () -->
-            <div id="u61" class="text" style="display:none; visibility: hidden">
-                <p><span></span></p>
-            </div>
+            <img id="u60_img" style="z-index: -1;width: 108px" ng-if="isRunnion" class="img gifImg" ng-src="${ctx}/static/rspc/dashBoard/img/gif031.gif"/>
         </div>
 
     </div>
     <!-- Unnamed (Rectangle) -->
-    <div class="area" style="width: 100%;height: 320px;margin-top: 20px">
+    <div class="area" style="width: 100%;height: 475px;margin-top: 20px">
         <div id="u52" class="ax_default heading_1">
             <div id="u53" class="text">
                 <p><span><spring:message code="dashBoard.rulestatistic"/></span></p>
             </div>
         </div>
         <!-- Unnamed (Image) -->
-        <div id="u42" class="ax_default image"></div>
+        <div id="u42" class="ax_default image" style="height: 400px"></div>
     </div>
 
 </div>
-<script src="${ctx}/static/js/Echarts/echarts.simple.min.js"></script>
+<script src="${ctx}/static/js/Echarts/echarts.min.js"></script>
 <script type="text/javascript" src="${ctx}/static/js/angular-1.2.19/angular.js"></script>
 <script src="${ctx}/static/rspc/dashBoard/active.js"></script>
 </body>

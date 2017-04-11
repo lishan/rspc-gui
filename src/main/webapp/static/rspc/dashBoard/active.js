@@ -40,6 +40,9 @@ angular.module('dashBoardApp',[])
                 title: {
                     text: '24小时告警触发Top10'
                 },
+                grid:{
+                  bottom:140
+                },
                 tooltip: {
                     trigger: 'axis',
                     axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -50,7 +53,11 @@ angular.module('dashBoardApp',[])
                     data:['告警']
                 },
                 xAxis: {
-                    data: xData
+                    data: xData,
+                    axisLabel:{
+                        interval:0,
+                        rotate:-30
+                    }
                 },
                 yAxis: {},
                 series: [{
