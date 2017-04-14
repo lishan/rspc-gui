@@ -49,14 +49,20 @@
               <p data-toggle="tooltip" ng-overflow="" verflow ng-bind="item.message" title="{{'<h4>'+(item.message|jsonFormat)+'</h4>'}}"></p>
           </td>
         </tr>
+        <tr ng-if="page.content.length==0">
+            <td colspan="4" style="text-align: center"><spring:message code="event.table.noData"></spring:message></td>
+        </tr>
         </tbody>
       </table>
-      <ng-pagination
-              curr_page="page.number"
-              to_page="toPage"
-              sort='page.sort'
-              total_ele="page.totalElements"
-              />
+      <span ng-if="page.content.length>0">
+          <ng-pagination
+                  curr_page="page.number"
+                  to_page="toPage"
+                  sort='page.sort'
+                  total_ele="page.totalElements"
+                  />
+      </span>
+
     </ng-table>
 
   <!-- 模态框（Modal） -->

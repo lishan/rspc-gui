@@ -17,27 +17,36 @@ angular.module('eventApp',['ngPagination','ngWdatePicker','ngOverflow'])
             pageSize=15;
             dataService.get(page,pageSize,$scope.rulename,$scope.bDate,$scope.eDate).success(function(d){
                 if(d.success){
-                    $scope.page.content= d.data.events;
-                    $scope.page.totalElements= d.data.totalPageNumber;
-                    $scope.page.size= d.data.pageSize;
-                    $scope.page.number= d.data.currentPage-1;
-                    setTimeout(function(){
-                        $("[data-toggle='tooltip']").tooltip({html : true ,placement:'auto'});
-                    },500)
+                    if(d.data){
+                        $scope.page.totalElements= d.data.totalPageNumber;
+                        $scope.page.content= d.data.events;
+                        $scope.page.size= d.data.pageSize;
+                        $scope.page.number= d.data.currentPage-1;
+                        setTimeout(function(){
+                            $("[data-toggle='tooltip']").tooltip({html : true ,placement:'auto'});
+                        },500)
+                    }else{
+                        $scope.page.totalElements= 0;
+                        $scope.page.content= [];
+                        $scope.page.size=15;
+                        $scope.page.number= 0;
+                    }
+
                 }
             });
 
         }
+        $scope.toPage();
         //模态框操作方法
         //$('#myModal').on('hidden.bs.modal', function () {
         //    $scope.rulename="",$scope.bDate="",$scope.eDate="";
         //    $scope.$apply();
         //})
         $scope.search=function(){
-            if($scope.rulename||$scope.bDate||$scope.eDate){
+            //if($scope.rulename||$scope.bDate||$scope.eDate){
                 $scope.toPage(0,15);
                 $('#myModal').modal('hide');
-            }
+            //}
         }
 
         $scope.slctArea=function(area){

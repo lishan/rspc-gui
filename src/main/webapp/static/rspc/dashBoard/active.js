@@ -56,7 +56,7 @@ angular.module('dashBoardApp',[])
                     data: xData,
                     axisLabel:{
                         interval:0,
-                        rotate:-30
+                        rotate:30
                     }
                 },
                 yAxis: {},
