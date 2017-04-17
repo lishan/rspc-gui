@@ -1,11 +1,7 @@
 package modules.rspc;
 
 import com.alibaba.fastjson.JSON;
-import org.apache.commons.fileupload.disk.DiskFileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.util.Streams;
-import org.apache.commons.lang3.StringUtils;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.POIXMLTextExtractor;
 import org.apache.poi.hwpf.extractor.WordExtractor;
@@ -23,11 +19,12 @@ import platform.utils.HttpUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Company 陕西识代运筹信息科技股份有限公司
@@ -47,24 +44,31 @@ public class Rule extends BaseAction{
     @RequestMapping("get")
     public ActionResultMap get(){
         String s = HttpUtils.get(apiHost.concat(Rspc.ruleUrl), null);
+        JSONObject object = JSON.parseObject(s);
         resultMap.setSuccess(true);
-        resultMap.setData(JSON.parseObject(s));
+        resultMap.setData(object.getString("rules"));
         return  resultMap;
     }
     @ResponseBody
     @RequestMapping("update")
     public ActionResultMap update(String body){
-        String s = HttpUtils.put(apiHost.concat(Rspc.ruleUrl), body);
+        Map map = new HashMap();
+        map.put("rules",body);
+        String s = HttpUtils.put(apiHost.concat(Rspc.ruleUrl), JSON.toJSONString(map));
+        JSONObject object = JSON.parseObject(s);
         resultMap.setSuccess(true);
-        resultMap.setData(s);
+        resultMap.setData(object.getString("rules"));
         return  resultMap;
     }
     @ResponseBody
     @RequestMapping("save")
     public ActionResultMap save(String body){
-        String s = HttpUtils.post(apiHost.concat(Rspc.ruleUrl), body);
+        Map map = new HashMap();
+        map.put("rules",body);
+        String s = HttpUtils.post(apiHost.concat(Rspc.ruleUrl), JSON.toJSONString(map));
+        JSONObject object = JSON.parseObject(s);
         resultMap.setSuccess(true);
-        resultMap.setData(s);
+        resultMap.setData(object.getString("rules"));
         return  resultMap;
     }
     @ResponseBody

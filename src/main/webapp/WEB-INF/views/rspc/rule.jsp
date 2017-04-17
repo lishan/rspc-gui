@@ -92,6 +92,7 @@
       callback:function(data){
         if(data&&data.success){
           layer.alert("<spring:message code="rule.save.success"/>");
+          document.forms[0]['body'].value=data.data;
           defaultValue=document.forms[0]['body'].value;
           contentChange(defaultValue);
         }else{
