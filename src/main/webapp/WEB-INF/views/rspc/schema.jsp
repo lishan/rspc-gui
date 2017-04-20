@@ -19,30 +19,22 @@
   <c:if test="${!empty data}">
   <form action="${ctx}/rspc/schema/data/update" method="post" id="form">
     </c:if>
-    <!-- Unnamed (Rectangle) -->
-    <div id="u247" class="ax_default heading_1">
-      <div id="u247_div" class=""></div>
-      <!-- Unnamed () -->
-      <div id="u248" class="text">
-        <p><span><spring:message code="schema.label"/></span></p>
+
+      <div class="form-group">
+        <label class="header-title"><spring:message code="schema.label"></spring:message></label>
+        <textarea class="form-control" id="schema_body" rows="20" datatype="*" name="body" onkeyup="contentChange(this.value)">${data.schema}</textarea>
+        <textarea class="form-control hide" id="schema_body_default">${data.schema}</textarea>
       </div>
-    </div>
 
-    <!-- Unnamed (Rectangle) -->
-    <div id="u249" class="ax_default button">
-      <button id="u249_div"><spring:message code="schema.save"></spring:message></button>
-    </div>
-
-    <!-- Unnamed (Text Area) -->
-    <div id="u251" class="ax_default text_area">
-      <textarea id="u251_input" name="body" datatype="*" onkeyup="contentChange(this.value)">${data.schema}</textarea>
-    </div>
-      </form>
+      <div class="row">
+          <button class="btn  pull-right background-color_golden" id="submitBtn"><spring:message code="schema.save"></spring:message></button>
+      </div>
+  </form>
     <script type="text/javascript">
       var defaultValue='${data.schema}';
       $(function(){
         $("#form").Validform({
-          btnSubmit:"#u249",
+          btnSubmit:"#submitBtn",
           ajaxPost:true,
           tiptype:4,
           postonce:true,
@@ -62,9 +54,9 @@
       });
       function contentChange(value){
         if(value==defaultValue){
-          $("#u249_div").css({"opacity":"0.65","cursor":"default"});
+          $("#submitBtn").css({"opacity":"0.65","cursor":"default"});
         }else{
-          $("#u249_div").css({"opacity":"1","cursor":"pointer"});
+          $("#submitBtn").css({"opacity":"1","cursor":"pointer"});
         }
       }
       contentChange(defaultValue);
