@@ -28,41 +28,44 @@ public class Uploadify extends HttpServlet{
         //设置接收的编码格式  
         request.setCharacterEncoding("UTF-8");  
 //        String newfileName = name;
-        response.setHeader("Content-type", "application/json;charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        PrintWriter writer = response.getWriter();
+
         try {
             DiskFileItemFactory fac = new DiskFileItemFactory();  
             ServletFileUpload upload = new ServletFileUpload(fac);  
             upload.setHeaderEncoding("UTF-8");
-
             // 获取多个上传文件
             List fileList = upload.parseRequest(request);
             // 遍历上传文件写入磁盘  
-            Iterator it = fileList.iterator();  
-            while (it.hasNext()) {  
+            Iterator it = fileList.iterator();
+            response.setHeader("Content-Type", "text/plain;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter writer = response.getWriter();
+
+            while (it.hasNext()) {
             	Object obit = it.next();
             	if(obit instanceof DiskFileItem){
-	                DiskFileItem item = (DiskFileItem) obit;  
+	                DiskFileItem item = (DiskFileItem) obit;
 
-	                // 如果item是文件上传表单域
-	                // 获得文件名及路径     
-	                String fileName = item.getName();  
-	                if (fileName != null) {
-                        InputStreamReader streamReader = new InputStreamReader(item.getInputStream());
-                        BufferedReader reader = new BufferedReader(streamReader);
-                        int b;
-                        while((b=reader.read())!=-1){
-                            writer.write(reader.readLine());
-                        }
+//                    InputStreamReader streamReader = new InputStreamReader(item.getInputStream());
+//                    BufferedReader reader = new BufferedReader(streamReader);
+//                    int b;
+//                    while((b=reader.read())!=-1){
+//                        writer.write(reader.readLine());
+//                    }
+
+                    BufferedInputStream in = new BufferedInputStream(item.getInputStream());// 获得文件输入流
+                    int ch;
+                    while ((ch = in.read()) != -1) {
+                        writer.write(ch);
                     }
             	}
-            }   
+            }
+            writer.flush();
+            writer.close();
         } catch (Exception ex) {
            return;
 		}   
-        writer.flush();
-        writer.close();
+
     }
    
     public void doPost(HttpServletRequest req, HttpServletResponse resp)  
