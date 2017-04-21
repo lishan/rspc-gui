@@ -34,16 +34,16 @@
   <c:if test="${!empty rule}">
   <form action="${ctx}/rspc/rule/data/update" method="post" id="form" role="form">
     </c:if>
-
-    <div class="form-group">
-      <label class="header-title"><spring:message code="rule.label"></spring:message></label>
+      <div class="form-group" style="padding-bottom: 15px">
+        <label class="header-title"><spring:message code="rule.label"></spring:message></label>
+      </div>
+    <div class="form-group" style="height: 430px">
       <textarea class="form-control" id="rult_body" rows="20" datatype="*" name="body" onkeyup="contentChange(this.value)">${rule}</textarea>
       <textarea class="form-control hide" id="rult_body_default">${rule}</textarea>
     </div>
-    <div class="row">
 
       <div class="form-group col-md-5">
-        <label for="uploadFile" class="col-sm-4 control-label text-right"><spring:message code="rule.uploadLabel"/></label>
+        <label for="uploadFile" class="col-sm-4 control-label text-right" style="padding-top: 8px"><spring:message code="rule.uploadLabel"/></label>
         <div class="col-sm-8">
           <input type="text" class="form-control" name="uploadFile" id="uploadFile" >
         </div>
@@ -51,7 +51,6 @@
       <div class="col-md-7">
         <button class="btn  pull-right background-color_golden" id="submitBtn"><spring:message code="rule.save"></spring:message></button>
       </div>
-    </div>
 </form>
 
 <%--<script src="${ctx}/static/rspc/rule/data.js"></script>--%>
@@ -72,6 +71,7 @@
       btnSubmit:"#u218",
       ajaxPost:true,
       tiptype:4,
+      postonce:true,
       beforeSubmit:function(curform){
         return document.forms[0]['body'].value!=defaultValue;
       },

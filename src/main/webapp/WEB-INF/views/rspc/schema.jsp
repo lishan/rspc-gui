@@ -19,16 +19,14 @@
   <c:if test="${!empty data}">
   <form action="${ctx}/rspc/schema/data/update" method="post" id="form">
     </c:if>
-
-      <div class="form-group">
+      <div class="form-group"style="padding-bottom: 15px">
         <label class="header-title"><spring:message code="schema.label"></spring:message></label>
+      </div>
+      <div class="form-group" style="height: 430px">
         <textarea class="form-control" id="schema_body" rows="20" datatype="*" name="body" onkeyup="contentChange(this.value)">${data.schema}</textarea>
         <textarea class="form-control hide" id="schema_body_default">${data.schema}</textarea>
       </div>
-
-      <div class="row">
-          <button class="btn  pull-right background-color_golden" id="submitBtn"><spring:message code="schema.save"></spring:message></button>
-      </div>
+      <button class="btn  pull-right background-color_golden" id="submitBtn"><spring:message code="schema.save"></spring:message></button>
   </form>
     <script type="text/javascript">
       var defaultValue='${data.schema}';
