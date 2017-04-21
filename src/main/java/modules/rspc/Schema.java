@@ -9,6 +9,9 @@ import platform.comm.ActionResultMap;
 import platform.comm.BaseAction;
 import platform.utils.HttpUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Company 陕西识代运筹信息科技股份有限公司
  * @Discription
@@ -34,8 +37,9 @@ public class Schema  extends BaseAction {
     @ResponseBody
     @RequestMapping("update")
     public ActionResultMap update(String body){
-        body=String.format("{\"schema\":\"%s\"}", body);
-        String s = HttpUtils.put(apiHost.concat(Rspc.schemaUrl), body);
+        Map map = new HashMap();
+        map.put("schema",body);
+        String s = HttpUtils.put(apiHost.concat(Rspc.schemaUrl), JSON.toJSONString(map));
         resultMap.setSuccess(true);
         resultMap.setData(s);
         return  resultMap;
@@ -43,7 +47,9 @@ public class Schema  extends BaseAction {
     @ResponseBody
     @RequestMapping("save")
     public ActionResultMap save(String body){
-        String s = HttpUtils.post(apiHost.concat(Rspc.schemaUrl), body);
+        Map map = new HashMap();
+        map.put("schema",body);
+        String s = HttpUtils.post(apiHost.concat(Rspc.schemaUrl), JSON.toJSONString(map));
         resultMap.setSuccess(true);
         resultMap.setData(s);
         return  resultMap;

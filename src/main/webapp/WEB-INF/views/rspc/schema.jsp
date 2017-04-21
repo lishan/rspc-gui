@@ -29,7 +29,7 @@
       <button class="btn  pull-right background-color_golden" id="submitBtn"><spring:message code="schema.save"></spring:message></button>
   </form>
     <script type="text/javascript">
-      var defaultValue='${data.schema}';
+      var defaultValue=$("#schema_body_default").text();
       $(function(){
         $("#form").Validform({
           btnSubmit:"#submitBtn",
