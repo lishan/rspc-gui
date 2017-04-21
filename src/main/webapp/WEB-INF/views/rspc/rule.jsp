@@ -93,13 +93,14 @@
       'swf'       	 : '${ctx}/static/js/uploadify/uploadify.swf',
       'uploader'       : url,//后台处理的请求
       'fileTypeDesc' : '文件' , //出现在上传对话框中的文件类型描述
-      'fileTypeExts' : '*.*', //控制可上传文件的扩展名，启用本项时需同时声明filedesc
+      'fileTypeExts' : '*.txt', //控制可上传文件的扩展名，启用本项时需同时声明filedesc
 
       'multi'          : false,
       'buttonText'     : '<spring:message code="rule.upload"/>',
-      'height':32,
+//      'height':32,
       onUploadSuccess:function(file, data, response){
-        $("#rult_body,#rult_body_default").html(data);
+        document.forms[0]['body'].value=data;
+        contentChange(document.forms[0]['body'].value);
       },
       onUploadError:function(file, errorCode, errorMsg) {
         alert("<spring:message code="rule.upload.failed"/>,file="+file.name);

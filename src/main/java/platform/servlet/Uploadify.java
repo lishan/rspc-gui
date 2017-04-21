@@ -26,7 +26,7 @@ public class Uploadify extends HttpServlet{
     public void doGet(HttpServletRequest request,  
             HttpServletResponse response) throws ServletException, IOException {  
         //设置接收的编码格式  
-        request.setCharacterEncoding("UTF-8");  
+//        request.setCharacterEncoding("UTF-8");
 //        String newfileName = name;
 
         try {
@@ -37,29 +37,26 @@ public class Uploadify extends HttpServlet{
             List fileList = upload.parseRequest(request);
             // 遍历上传文件写入磁盘  
             Iterator it = fileList.iterator();
-            response.setHeader("Content-Type", "text/plain;charset=UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            PrintWriter writer = response.getWriter();
-
+            StringBuffer result = new StringBuffer();
             while (it.hasNext()) {
             	Object obit = it.next();
             	if(obit instanceof DiskFileItem){
 	                DiskFileItem item = (DiskFileItem) obit;
-
-//                    InputStreamReader streamReader = new InputStreamReader(item.getInputStream());
-//                    BufferedReader reader = new BufferedReader(streamReader);
-//                    int b;
-//                    while((b=reader.read())!=-1){
-//                        writer.write(reader.readLine());
-//                    }
-
-                    BufferedInputStream in = new BufferedInputStream(item.getInputStream());// 获得文件输入流
-                    int ch;
-                    while ((ch = in.read()) != -1) {
-                        writer.write(ch);
+                    String fileName = item.getName();
+                    if (fileName != null) {
+                        BufferedInputStream in = new BufferedInputStream(item.getInputStream());// 获得文件输入流
+                        BufferedReader reader = new BufferedReader (new InputStreamReader(in));
+                        while (reader.ready()) {
+                            result.append((char)reader.read());
+                        }
                     }
+
             	}
             }
+            response.setHeader("Content-Type", "text/plain;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter writer = response.getWriter();
+            writer.write(result.toString());
             writer.flush();
             writer.close();
         } catch (Exception ex) {
