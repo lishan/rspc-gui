@@ -17,13 +17,6 @@
     .uploadify-queue{
       margin-top: 30px;
     }
-
-    #u218{
-      top: 556px;
-    }
-    #u219{
-      top: 9px;
-    }
   </style>
 </head>
 <body>

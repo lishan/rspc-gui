@@ -32,6 +32,8 @@ public class Rspc {
 
     public static String configUrl="/rspc/v1/api/configure";
 
+    public static String loginUrl="/com.asiainfo.rspc.web/v1/api/login?token=";
+
     /**
      * 仪表盘
      * @return
