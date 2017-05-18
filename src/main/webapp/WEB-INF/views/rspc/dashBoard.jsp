@@ -117,6 +117,7 @@
 </div>
 <script src="${ctx}/static/js/Echarts/echarts.min.js"></script>
 <script type="text/javascript" src="${ctx}/static/js/angular-1.2.19/angular.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/angularPulgs/httpHeader.js"></script>
 <script src="${ctx}/static/rspc/dashBoard/active.js"></script>
 </body>
 </html>

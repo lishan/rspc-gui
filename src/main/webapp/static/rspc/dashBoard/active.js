@@ -1,4 +1,4 @@
-angular.module('dashBoardApp',[])
+angular.module('dashBoardApp',["httpHeader"])
 .controller('dashBoardContro',['$scope','dataService',function($scope,dataService){
         $scope.configInfo={
             topo:{
@@ -75,18 +75,9 @@ angular.module('dashBoardApp',[])
 .service('dataService',['$http',function($http){
 
         this.get = function(){
-            return ajaxRequest(ctx+'/rspc/config/data/get',{});
+            return $http.post(ctx+'/rspc/config/data/get',{});
         };
         this.statistic = function(){
-            return ajaxRequest(ctx+'/rspc/event/data/statistic',{});
+            return $http.post(ctx+'/rspc/event/data/statistic',{});
         };
-
-        function ajaxRequest(url, params) {
-            return $http.post(url, params, {
-                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-                transformRequest: function (data) {
-                    return $.param(data);
-                }
-            })
-        }
     }]);

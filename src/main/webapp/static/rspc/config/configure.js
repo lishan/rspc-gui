@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/3/17.
  */
-var configModule = angular.module('configApp', []);
+var configModule = angular.module('configApp', ["httpHeader"]);
 configModule.controller('configControl', ['$scope', 'dataService', function ($scope, dataService) {
     $scope.submitFlag = true;
     $scope.comFigFlag = true;
@@ -85,19 +85,10 @@ configModule.controller('configControl', ['$scope', 'dataService', function ($sc
 }]).service('dataService', ['$http', function ($http) {
 
     this.get = function () {
-        return ajaxRequest(ctx + '/rspc/config/data/get', {});
+        return $http.post(ctx + '/rspc/config/data/get', {});
     };
 
     this.update = function (param) {
-        return ajaxRequest(ctx + '/rspc/config/data/update', {body: JSON.stringify(param)});
-    };
-
-    function ajaxRequest(url, params) {
-        return $http.post(url, params, {
-            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-            transformRequest: function (data) {
-                return $.param(data);
-            }
-        });
+        return $http.post(ctx + '/rspc/config/data/update', {body: JSON.stringify(param)});
     };
 }]);
