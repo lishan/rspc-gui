@@ -23,14 +23,6 @@ public class AdminUserService {
 	private String apiHost;
 
 	private Logger log = Logger.getLogger(this.getClass());
-	/** 根据用户名获得用户
-	 * @param userName
-	 * @return
-	 */
-	public AdminUser getAdminUser(String userName){
-//		String s = HttpUtils.get(apiHost.concat(Rspc.configUrl), null);
-		return  new AdminUser();
-	}
 	/**
 	 * 根据用户名获得用户
 	 * @param userName
@@ -65,7 +57,7 @@ public class AdminUserService {
 				exec.destroy();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("根据用户名获得用户异常",e);
 		}
 		return null;
 	}
