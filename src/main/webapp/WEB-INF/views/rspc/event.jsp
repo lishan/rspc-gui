@@ -106,6 +106,7 @@
   <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/angularPulgs/ngPagination/ngPagination_beauty.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/angularPulgs/overflow.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/angularPulgs/httpHeader.js"></script>
+<script type="text/javascript" src="${ctx}/static/rspc/dataService.js"></script>
   <script type="text/javascript" src="${ctx}/static/rspc/event/active.js"></script>
 </body>
 </html>

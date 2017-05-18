@@ -267,6 +267,7 @@
 
 <script type="text/javascript" src="${ctx}/static/js/angular-1.2.19/angular.js"></script>
 <script type="text/javascript" src="${ctx}/static/js/angularPulgs/httpHeader.js"></script>
+<script type="text/javascript" src="${ctx}/static/rspc/dataService.js"></script>
 <script src="${ctx}/static/rspc/config/configure.js"></script>
 
 </body>

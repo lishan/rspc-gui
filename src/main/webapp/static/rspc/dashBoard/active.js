@@ -1,4 +1,4 @@
-angular.module('dashBoardApp',["httpHeader"])
+angular.module('dashBoardApp',["dataService"])
 .controller('dashBoardContro',['$scope','dataService',function($scope,dataService){
         $scope.configInfo={
             topo:{
@@ -10,7 +10,7 @@ angular.module('dashBoardApp',["httpHeader"])
         $scope.taskStart=function(isRunnion){
             $scope.isRunnion=isRunnion;
             if(isRunnion){
-                dataService.get().success(function(d){
+                dataService.getConfig().success(function(d){
                     if(d.success){
                         $scope.configInfo= d.data;
                     }
@@ -70,14 +70,4 @@ angular.module('dashBoardApp',["httpHeader"])
 
         }
 
-
 }])
-.service('dataService',['$http',function($http){
-
-        this.get = function(){
-            return $http.post(ctx+'/rspc/config/data/get',{});
-        };
-        this.statistic = function(){
-            return $http.post(ctx+'/rspc/event/data/statistic',{});
-        };
-    }]);

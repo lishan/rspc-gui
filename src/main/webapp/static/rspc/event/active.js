@@ -1,4 +1,4 @@
-angular.module('eventApp',['ngPagination','ngWdatePicker','ngOverflow',"httpHeader"])
+angular.module('eventApp',['ngPagination','ngWdatePicker','ngOverflow',"dataService"])
 .controller('eventContro',['$scope','dataService',function($scope,dataService){
 
         $scope.page={
@@ -15,7 +15,7 @@ angular.module('eventApp',['ngPagination','ngWdatePicker','ngOverflow',"httpHead
 
         $scope.toPage=function(page,pageSize,sort){
             pageSize=15;
-            dataService.get(page,pageSize,$scope.rulename,$scope.bDate,$scope.eDate).success(function(d){
+            dataService.getEvent(page,pageSize,$scope.rulename,$scope.bDate,$scope.eDate).success(function(d){
                 if(d.success){
                     if(d.data){
                         $scope.page.totalElements= d.data.totalPageNumber;
@@ -64,19 +64,6 @@ angular.module('eventApp',['ngPagination','ngWdatePicker','ngOverflow',"httpHead
             }
         }
 }])
-.service('dataService',['$http',function($http){
-
-        this.get = function(page,pageSize,rulename,bDate,eDate){
-            return $http.post(ctx+'/rspc/event/data/get',
-                {
-                    page:page,
-                    pageSize:pageSize,
-                    rulename:rulename,
-                    bDate:bDate,
-                    eDate:eDate
-                });
-        };
-    }])
     .filter("dateFormat",function(){
         return function(date){
             if(date){
