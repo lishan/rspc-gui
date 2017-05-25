@@ -10,7 +10,6 @@
 <html>
 <head>
     <title><spring:message code="schema.title"/></title>
-  <link href="${ctx}/static/rspc/schema/styles.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 <c:if test="${empty data}">

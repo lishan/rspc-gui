@@ -1,5 +1,4 @@
-angular.module('dashBoardApp',["dataService"])
-.controller('dashBoardContro',['$scope','dataService',function($scope,dataService){
+rspcApp.controller('dashBoardContro',['$scope','dataService',function($scope,dataService){
         $scope.configInfo={
             topo:{
                 spoutConfig:{numberTasks:0},

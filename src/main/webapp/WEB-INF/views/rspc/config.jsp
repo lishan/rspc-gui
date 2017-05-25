@@ -11,13 +11,14 @@
 <head>
     <title><spring:message  code="config.title"/></title>
     <link href="${ctx}/static/rspc/config/configure.css" rel="stylesheet" type="text/css">
+
     <script>
         var saveSuccess='<spring:message  code="config.save.success"/>';
         var saveFailed='<spring:message  code="config.save.failed"/>';
     </script>
 </head>
 <body>
-<div ng-app="configApp" ng-controller="configControl" style="padding-top: 50px">
+<div ng-controller="configControl" style="padding-top: 50px">
     <form id="configForm">
         <span class="header-title"><spring:message  code="config.label"/></span>
         <div style="height: auto">
@@ -265,9 +266,6 @@
     </form>
 </div>
 
-<script type="text/javascript" src="${ctx}/static/js/angular-1.2.19/angular.js"></script>
-<script type="text/javascript" src="${ctx}/static/js/angularPulgs/httpHeader.js"></script>
-<script type="text/javascript" src="${ctx}/static/rspc/dataService.js"></script>
 <script src="${ctx}/static/rspc/config/configure.js"></script>
 
 </body>

@@ -10,7 +10,6 @@
 <html>
 <head>
     <title><spring:message code="rule.title"></spring:message></title>
-  <link href="${ctx}/static/rspc/rule/styles.css" type="text/css" rel="stylesheet"/>
   <script type="text/javascript" src="${ctx}/static/js/uploadify/jquery.uploadify.min.js"></script>
   <link href="${ctx}/static/js/uploadify/uploadify.css" type="text/css" rel="stylesheet">
   <style>

@@ -11,6 +11,10 @@ angular.module('dataService',["httpHeader"])
         this.getConfig = function(){
             return $http.post(ctx+'/rspc/config/data/get',{});
         };
+
+        this.updateConfig = function (param) {
+            return $http.post(ctx + '/rspc/config/data/update', {body: JSON.stringify(param)});
+        };
         /**
          *  获取统计
          * @returns {HttpPromise}

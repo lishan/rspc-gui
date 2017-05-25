@@ -1,8 +1,7 @@
 /**
  * Created by Administrator on 2017/3/17.
  */
-var configModule = angular.module('configApp', ["httpHeader"]);
-configModule.controller('configControl', ['$scope', 'dataService', function ($scope, dataService) {
+rspcApp.controller('configControl', ['$scope', 'dataService', function ($scope, dataService) {
     $scope.submitFlag = true;
     $scope.comFigFlag = true;
     $scope.ZookeeperFigFlag = true;
@@ -41,7 +40,7 @@ configModule.controller('configControl', ['$scope', 'dataService', function ($sc
 
     $scope.pageData = {};
     var data = {};
-    dataService.get().success(function (d) {
+    dataService.getConfig().success(function (d) {
         if (d.success) {
             $scope.pageData = d.data;
             data = angular.copy(d.data);
@@ -67,7 +66,7 @@ configModule.controller('configControl', ['$scope', 'dataService', function ($sc
                 $scope.submitFlag = true;
             } else {
                 $scope.submitFlag = false;
-                dataService.update($scope.pageData).success(function(d){
+                dataService.updateConfig($scope.pageData).success(function(d){
                     if(d&& d.success){
                         layer.alert(saveSuccess);
                         data = angular.copy(d.data);
@@ -81,14 +80,4 @@ configModule.controller('configControl', ['$scope', 'dataService', function ($sc
             return false;
         }
     });
-
-}]).service('dataService', ['$http', function ($http) {
-
-    this.get = function () {
-        return $http.post(ctx + '/rspc/config/data/get', {});
-    };
-
-    this.update = function (param) {
-        return $http.post(ctx + '/rspc/config/data/update', {body: JSON.stringify(param)});
-    };
 }]);

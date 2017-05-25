@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-<div ng-app="eventApp" ng-controller="eventContro" style="padding-top: 50px">
+<div ng-controller="eventContro" style="padding-top: 50px">
   <span class="header-title"><spring:message code="event.label"/></span>
   <div>
     <span class="pull-right "  data-toggle="modal" data-target="#myModal"><a href="javascript:void (0)"><spring:message code="event.filter"/></a></span>
@@ -100,13 +100,7 @@
     </div><!-- /.modal -->
   </div>
 </div>
-  <script type="text/javascript" src="${ctx}/static/js/angular-1.2.19/angular.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/My97DatePicker/WdatePicker.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/angularPulgs/ngWdatePicker.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/angularPulgs/ngPagination/ngPagination_beauty.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/angularPulgs/overflow.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/angularPulgs/httpHeader.js"></script>
-<script type="text/javascript" src="${ctx}/static/rspc/dataService.js"></script>
+
   <script type="text/javascript" src="${ctx}/static/rspc/event/active.js"></script>
 </body>
 </html>

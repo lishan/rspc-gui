@@ -1,5 +1,4 @@
-angular.module('eventApp',['ngPagination','ngWdatePicker','ngOverflow',"dataService"])
-.controller('eventContro',['$scope','dataService',function($scope,dataService){
+rspcApp.controller('eventContro',['$scope','dataService',function($scope,dataService){
 
         $scope.page={
             content:[],
