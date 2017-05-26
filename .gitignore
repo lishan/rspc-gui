@@ -1,7 +1,6 @@
 *.class
 /target
 /classes
-*.jar
 *.war
 *.ear
 *.log
