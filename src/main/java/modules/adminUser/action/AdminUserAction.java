@@ -86,6 +86,6 @@ public class AdminUserAction extends BaseAction{
 	public String logout(){
 		Subject subject = SecurityUtils.getSubject();  
 		subject.logout();
-		return "redirect:/admin/user/toLogin";
+		return "redirect:toLogin";
 	}
 }
