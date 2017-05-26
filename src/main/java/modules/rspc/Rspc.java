@@ -2,6 +2,7 @@ package modules.rspc;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -58,8 +59,10 @@ public class Rspc {
     @RequestMapping("rule")
     public String rule(ModelMap map){
         String s = HttpUtils.get(apiHost.concat(ruleUrl), null);
-        JSONObject object = JSON.parseObject(s);
-        map.put("rule", object.getString("rules"));
+        if(StringUtils.isNotBlank(s)){
+            JSONObject object = JSON.parseObject(s);
+            map.put("rule", object.getString("rules"));
+        }
         return "rspc/rule";
     }
     /**
@@ -69,7 +72,9 @@ public class Rspc {
     @RequestMapping("schema")
     public String dataModel(ModelMap map){
         String s = HttpUtils.get(apiHost.concat(schemaUrl), null);
-        map.put("data", JSON.parseObject(s));
+        if(StringUtils.isNotBlank(s)){
+            map.put("data", JSON.parseObject(s));
+        }
         return "rspc/schema";
     }
     /**

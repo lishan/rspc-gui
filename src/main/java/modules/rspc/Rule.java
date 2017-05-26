@@ -2,6 +2,7 @@ package modules.rspc;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.POIXMLTextExtractor;
 import org.apache.poi.hwpf.extractor.WordExtractor;
@@ -44,9 +45,11 @@ public class Rule extends BaseAction{
     @RequestMapping("get")
     public ActionResultMap get(){
         String s = HttpUtils.get(apiHost.concat(Rspc.ruleUrl), null);
-        JSONObject object = JSON.parseObject(s);
-        resultMap.setSuccess(true);
-        resultMap.setData(object.getString("rules"));
+        if(StringUtils.isNotBlank(s)){
+            JSONObject object = JSON.parseObject(s);
+            resultMap.setSuccess(true);
+            resultMap.setData(object.getString("rules"));
+        }
         return  resultMap;
     }
     @ResponseBody

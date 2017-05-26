@@ -1,6 +1,7 @@
 package modules.rspc;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,9 @@ public class Schema  extends BaseAction {
     public ActionResultMap get(){
         String s = HttpUtils.get(apiHost.concat(Rspc.schemaUrl), null);
         resultMap.setSuccess(true);
-        resultMap.setData(JSON.parseObject(s));
+        if(StringUtils.isNotBlank(s)){
+            resultMap.setData(JSON.parseObject(s));
+        }
         return  resultMap;
     }
     @ResponseBody
