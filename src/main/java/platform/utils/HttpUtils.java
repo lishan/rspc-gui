@@ -10,6 +10,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.Map;
  * 时间： 2014/10/20.
  */
 public class HttpUtils {
+    private static Logger logger = Logger.getLogger(HttpUtils.class);
 
     public static String post(String url,Map<String,String> params){
         // 创建默认的httpClient实例.
@@ -41,11 +43,19 @@ public class HttpUtils {
             httppost.setEntity(uefEntity);
             CloseableHttpResponse response = httpclient.execute(httppost);
             try {
-                HttpEntity entity = response.getEntity();
-                if (entity != null) {
-                    String responseBody = EntityUtils.toString(entity, "UTF-8");
-                    return responseBody;
+
+                int statusCode = response.getStatusLine().getStatusCode();
+                if(200==statusCode){
+                    HttpEntity entity = response.getEntity();
+                    if (entity != null) {
+                        String responseBody = EntityUtils.toString(entity, "UTF-8");
+                        return responseBody;
+                    }
+                }else {
+                    logger.error(response.getStatusLine().getStatusCode());
+                    return null;
                 }
+
             } finally {
                 response.close();
             }
@@ -74,10 +84,16 @@ public class HttpUtils {
             }
             CloseableHttpResponse response = httpclient.execute(httppost);
             try {
-                HttpEntity entity = response.getEntity();
-                if (entity != null) {
-                    String responseBody = EntityUtils.toString(entity, "UTF-8");
-                    return responseBody;
+                int statusCode = response.getStatusLine().getStatusCode();
+                if(200==statusCode){
+                    HttpEntity entity = response.getEntity();
+                    if (entity != null) {
+                        String responseBody = EntityUtils.toString(entity, "UTF-8");
+                        return responseBody;
+                    }
+                }else {
+                    logger.error(response.getStatusLine().getStatusCode());
+                    return null;
                 }
             } finally {
                 response.close();
@@ -115,10 +131,17 @@ public class HttpUtils {
             CloseableHttpResponse response = httpclient.execute(httpget);
             try {
                 // 获取响应实体
-                HttpEntity entity = response.getEntity();
-                if (entity != null) {
-                     return EntityUtils.toString(entity);
+                int statusCode = response.getStatusLine().getStatusCode();
+                if(200==statusCode){
+                    HttpEntity entity = response.getEntity();
+                    if (entity != null) {
+                        return EntityUtils.toString(entity);
+                    }
+                }else {
+                    logger.error(response.getStatusLine().getStatusCode());
+                    return null;
                 }
+
             } finally {
                 response.close();
             }
@@ -151,9 +174,15 @@ public class HttpUtils {
             CloseableHttpResponse response = httpclient.execute(httpget);
             try {
                 // 获取响应实体
-                HttpEntity entity = response.getEntity();
-                if (entity != null) {
-                    return EntityUtils.toString(entity);
+                int statusCode = response.getStatusLine().getStatusCode();
+                if(200==statusCode){
+                    HttpEntity entity = response.getEntity();
+                    if (entity != null) {
+                        return EntityUtils.toString(entity);
+                    }
+                }else {
+                    logger.error(response.getStatusLine().getStatusCode());
+                    return null;
                 }
             } finally {
                 response.close();

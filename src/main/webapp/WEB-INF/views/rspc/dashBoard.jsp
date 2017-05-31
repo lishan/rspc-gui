@@ -18,6 +18,9 @@
             /*border-color: #0088cc;*/
         }
     </style>
+    <script type="text/javascript">
+    var startFailure= '<spring:message code="dashBoard.task_start_failure"/>';
+    </script>
 </head>
 <body>
 <div ng-controller="dashBoardContro">

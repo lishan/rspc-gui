@@ -12,6 +12,9 @@ rspcApp.controller('dashBoardContro',['$scope','dataService',function($scope,dat
                 dataService.getConfig().success(function(d){
                     if(d.success){
                         $scope.configInfo= d.data;
+                    }else{
+                        $scope.isRunnion=false;
+                        layer.alert(startFailure);
                     }
                 });
             }else{
@@ -22,12 +25,14 @@ rspcApp.controller('dashBoardContro',['$scope','dataService',function($scope,dat
 
 
         dataService.statistic().success(function(d){
+            var xData=[],yData=[];
             if(d.success){
-                var xData=[],yData=[];
                 for(var item in d.data.statistic){
                     xData.push(d.data.statistic[item].rulename);
                     yData.push(d.data.statistic[item].number);
                 }
+                initEcharts(xData,yData);
+            }else{
                 initEcharts(xData,yData);
             }
         });

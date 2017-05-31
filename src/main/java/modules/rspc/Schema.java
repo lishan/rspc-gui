@@ -31,9 +31,11 @@ public class Schema  extends BaseAction {
     @RequestMapping("get")
     public ActionResultMap get(){
         String s = HttpUtils.get(apiHost.concat(Rspc.schemaUrl), null);
-        resultMap.setSuccess(true);
         if(StringUtils.isNotBlank(s)){
+            resultMap.setSuccess(true);
             resultMap.setData(JSON.parseObject(s));
+        }else {
+            resultMap.setSuccess(false);
         }
         return  resultMap;
     }
@@ -43,8 +45,12 @@ public class Schema  extends BaseAction {
         Map map = new HashMap();
         map.put("schema",body);
         String s = HttpUtils.put(apiHost.concat(Rspc.schemaUrl), JSON.toJSONString(map));
-        resultMap.setSuccess(true);
-        resultMap.setData(s);
+        if(StringUtils.isNotBlank(s)){
+            resultMap.setSuccess(true);
+            resultMap.setData(JSON.parseObject(s));
+        }else {
+            resultMap.setSuccess(false);
+        }
         return  resultMap;
     }
     @ResponseBody
@@ -53,16 +59,24 @@ public class Schema  extends BaseAction {
         Map map = new HashMap();
         map.put("schema",body);
         String s = HttpUtils.post(apiHost.concat(Rspc.schemaUrl), JSON.toJSONString(map));
-        resultMap.setSuccess(true);
-        resultMap.setData(s);
+        if(StringUtils.isNotBlank(s)){
+            resultMap.setSuccess(true);
+            resultMap.setData(JSON.parseObject(s));
+        }else {
+            resultMap.setSuccess(false);
+        }
         return  resultMap;
     }
     @ResponseBody
     @RequestMapping("dele")
     public ActionResultMap dele(){
         String s = HttpUtils.delte(apiHost.concat(Rspc.schemaUrl), null);
-        resultMap.setSuccess(true);
-        resultMap.setData(JSON.parseObject(s));
+        if(StringUtils.isNotBlank(s)){
+            resultMap.setSuccess(true);
+            resultMap.setData(JSON.parseObject(s));
+        }else {
+            resultMap.setSuccess(false);
+        }
         return  resultMap;
     }
 }

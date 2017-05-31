@@ -75,9 +75,14 @@ public class Rule extends BaseAction{
         Map map = new HashMap();
         map.put("rules",body);
         String s = HttpUtils.post(apiHost.concat(Rspc.ruleUrl), JSON.toJSONString(map));
-        JSONObject object = JSON.parseObject(s);
-        resultMap.setSuccess(true);
-        resultMap.setData(object.getString("rules"));
+        if(StringUtils.isNotBlank(s)){
+            JSONObject object = JSON.parseObject(s);
+            resultMap.setSuccess(true);
+            resultMap.setData(object.getString("rules"));
+        }else {
+            resultMap.setSuccess(false);
+        }
+
         return  resultMap;
     }
     @ResponseBody
