@@ -18,6 +18,7 @@ rspcApp.controller('dashBoardContro',['$scope','dataService',function($scope,dat
                     }
                 });
             }else{
+                $scope.isRunnion=isRunnion;
                 $scope.configInfo.topo.spoutConfig.numberTasks=0;
                 $scope.configInfo.topo.ruleBoltConfig.numberTasks=0;
             }

@@ -1,7 +1,7 @@
 package modules.rspc;
 
 import com.alibaba.fastjson.JSON;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import platform.comm.ActionResultMap;
 import platform.comm.BaseAction;
 import platform.utils.HttpUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Company 陕西识代运筹信息科技股份有限公司
@@ -27,11 +30,15 @@ public class Configure extends BaseAction{
     @ResponseBody
     @RequestMapping("get")
     public ActionResultMap get(){
-        String s = HttpUtils.get(apiHost.concat(Rspc.configUrl), null);
-        if(StringUtils.isNotBlank(s)){
+        Map<String,String> parma = new HashMap<String,String>();
+        parma.put("token",getAdminUser().getSalt());
+        HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(Rspc.configUrl), parma);
+        if(httpRuest.getStatusCode()==200){
             resultMap.setSuccess(true);
-            resultMap.setData(JSON.parseObject(s));
-        }else {
+            resultMap.setData(JSON.parseObject(httpRuest.getEntity()));
+        }else if(httpRuest.getStatusCode()==403){
+            throw new AuthorizationException();
+        } else {
             resultMap.setSuccess(false);
         }
 
@@ -41,11 +48,13 @@ public class Configure extends BaseAction{
     @ResponseBody
     @RequestMapping("update")
     public ActionResultMap update(String body){
-        String s = HttpUtils.put(apiHost.concat(Rspc.configUrl), body);
-        if(StringUtils.isNotBlank(s)){
+        HttpUtils.HttpRuest put = HttpUtils.put(apiHost.concat(Rspc.configUrl).concat("?token=").concat(getAdminUser().getSalt()), body);
+        if(put.getStatusCode()==200){
             resultMap.setSuccess(true);
-            resultMap.setData(JSON.parseObject(s));
-        }else {
+            resultMap.setData(JSON.parseObject(put.getEntity()));
+        }else if(put.getStatusCode()==403){
+            throw new AuthorizationException();
+        } else {
             resultMap.setSuccess(false);
         }
         return  resultMap;

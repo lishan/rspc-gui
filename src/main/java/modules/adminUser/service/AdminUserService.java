@@ -27,12 +27,12 @@ public class AdminUserService {
 	 */
 	public AdminUser getAdminUser(String userName,String pwd){
 		String token = AuthenticateAdapter.generateToken(userName, pwd);
-		String s = HttpUtils.get(apiHost.concat(Rspc.loginUrl).concat(token), null);
-		log.info("请求登录返回："+s);
-		if("Login Succes".equals(s)){
+		HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(Rspc.loginUrl).concat(token), null);
+		if(httpRuest.getStatusCode()==200){
 			AdminUser adminUser = new AdminUser();
 			adminUser.setUserName(userName);
 			adminUser.setPassword(pwd);
+			adminUser.setSalt(token);
 			return adminUser;
 		}
 		return null;

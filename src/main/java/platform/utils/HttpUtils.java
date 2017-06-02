@@ -3,12 +3,10 @@ package platform.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
@@ -25,53 +23,8 @@ import java.util.Map;
 public class HttpUtils {
     private static Logger logger = Logger.getLogger(HttpUtils.class);
 
-    public static String post(String url,Map<String,String> params){
-        // 创建默认的httpClient实例.
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        // 创建httppost
-        HttpPost httppost = new HttpPost(url);
-        // 创建参数队列
-        List<BasicNameValuePair> formparams = new ArrayList<BasicNameValuePair>();
-        if(null!=params){
-            for(String key : params.keySet()){
-                formparams.add(new BasicNameValuePair(key, params.get(key)));
-            }
-        }
-        UrlEncodedFormEntity uefEntity;
-        try {
-            uefEntity = new UrlEncodedFormEntity(formparams, "UTF-8");
-            httppost.setEntity(uefEntity);
-            CloseableHttpResponse response = httpclient.execute(httppost);
-            try {
 
-                int statusCode = response.getStatusLine().getStatusCode();
-                if(200==statusCode){
-                    HttpEntity entity = response.getEntity();
-                    if (entity != null) {
-                        String responseBody = EntityUtils.toString(entity, "UTF-8");
-                        return responseBody;
-                    }
-                }else {
-                    logger.error(response.getStatusLine().getStatusCode());
-                    return null;
-                }
-
-            } finally {
-                response.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            // 关闭连接,释放资源
-            try {
-                httpclient.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return  null;
-    }
-    public static String post(String url,String body){
+    public static HttpRuest post(String url,String body){
         // 创建默认的httpClient实例.
         CloseableHttpClient httpclient = HttpClients.createDefault();
         // 创建httppost
@@ -82,19 +35,17 @@ public class HttpUtils {
             if (StringUtils.isNotBlank(body)) {
                 httppost.setEntity(new StringEntity(body));
             }
+            httppost.addHeader("Content-Type","application/json");
             CloseableHttpResponse response = httpclient.execute(httppost);
             try {
                 int statusCode = response.getStatusLine().getStatusCode();
-                if(200==statusCode){
-                    HttpEntity entity = response.getEntity();
-                    if (entity != null) {
-                        String responseBody = EntityUtils.toString(entity, "UTF-8");
-                        return responseBody;
-                    }
+                HttpEntity entity = response.getEntity();
+                if(null==entity){
+                    return new HttpRuest(statusCode,null);
                 }else {
-                    logger.error(response.getStatusLine().getStatusCode());
-                    return null;
+                    return new HttpRuest(statusCode,EntityUtils.toString(entity));
                 }
+
             } finally {
                 response.close();
             }
@@ -113,7 +64,7 @@ public class HttpUtils {
     /**
      * 发送 get请求
      */
-    public static String get(String url,Map<String,String> params) {
+    public static HttpRuest get(String url,Map<String,String> params) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
             if (null!=params) {
@@ -132,15 +83,13 @@ public class HttpUtils {
             try {
                 // 获取响应实体
                 int statusCode = response.getStatusLine().getStatusCode();
-                if(200==statusCode){
-                    HttpEntity entity = response.getEntity();
-                    if (entity != null) {
-                        return EntityUtils.toString(entity);
-                    }
+                HttpEntity entity = response.getEntity();
+                if(null==entity){
+                    return new HttpRuest(statusCode,null);
                 }else {
-                    logger.error(response.getStatusLine().getStatusCode());
-                    return null;
+                    return new HttpRuest(statusCode,EntityUtils.toString(entity));
                 }
+
 
             } finally {
                 response.close();
@@ -161,7 +110,7 @@ public class HttpUtils {
     /**
      * 发送 get请求
      */
-    public static String put(String url,String body) {
+    public static HttpRuest put(String url,String body) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
             // 创建httpget.
@@ -175,15 +124,13 @@ public class HttpUtils {
             try {
                 // 获取响应实体
                 int statusCode = response.getStatusLine().getStatusCode();
-                if(200==statusCode){
-                    HttpEntity entity = response.getEntity();
-                    if (entity != null) {
-                        return EntityUtils.toString(entity);
-                    }
+                HttpEntity entity = response.getEntity();
+                if(null==entity){
+                    return new HttpRuest(statusCode,null);
                 }else {
-                    logger.error(response.getStatusLine().getStatusCode());
-                    return null;
+                    return new HttpRuest(statusCode,EntityUtils.toString(entity));
                 }
+
             } finally {
                 response.close();
             }
@@ -203,7 +150,7 @@ public class HttpUtils {
     /**
      * 发送 get请求
      */
-    public static String delte(String url,Map<String,String> params) {
+    public static HttpRuest delte(String url,Map<String,String> params) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
             if (null!=params) {
@@ -221,10 +168,14 @@ public class HttpUtils {
             CloseableHttpResponse response = httpclient.execute(httpget);
             try {
                 // 获取响应实体
+                int statusCode = response.getStatusLine().getStatusCode();
                 HttpEntity entity = response.getEntity();
-                if (entity != null) {
-                    return EntityUtils.toString(entity);
+                if(null==entity){
+                    return new HttpRuest(statusCode,null);
+                }else {
+                    return new HttpRuest(statusCode,EntityUtils.toString(entity));
                 }
+
             } finally {
                 response.close();
             }
@@ -239,5 +190,37 @@ public class HttpUtils {
             }
         }
         return null;
+    }
+
+    /**
+     * 请求返回
+     */
+    public static class HttpRuest{
+        private int statusCode;
+        private  String entity;
+
+        public HttpRuest() {
+        }
+
+        public HttpRuest(int statusCode, String entity) {
+            this.statusCode = statusCode;
+            this.entity = entity;
+        }
+
+        public int getStatusCode() {
+            return statusCode;
+        }
+
+        public void setStatusCode(int statusCode) {
+            this.statusCode = statusCode;
+        }
+
+        public String getEntity() {
+            return entity;
+        }
+
+        public void setEntity(String entity) {
+            this.entity = entity;
+        }
     }
 }

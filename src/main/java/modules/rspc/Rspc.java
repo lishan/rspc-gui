@@ -2,11 +2,11 @@ package modules.rspc;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import platform.comm.BaseAction;
 import platform.utils.HttpUtils;
 
 /**
@@ -18,7 +18,7 @@ import platform.utils.HttpUtils;
  */
 @Controller
 @RequestMapping("/rspc")
-public class Rspc {
+public class Rspc extends BaseAction{
 
     @Value("#{config.api_host_name}")
     private String apiHost;
@@ -58,9 +58,9 @@ public class Rspc {
      */
     @RequestMapping("rule")
     public String rule(ModelMap map){
-        String s = HttpUtils.get(apiHost.concat(ruleUrl), null);
-        if(StringUtils.isNotBlank(s)){
-            JSONObject object = JSON.parseObject(s);
+        HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(ruleUrl).concat("?token=").concat(getAdminUser().getSalt()), null);
+        if(httpRuest.getStatusCode()==200){
+            JSONObject object = JSON.parseObject(httpRuest.getEntity());
             map.put("rule", object.getString("rules"));
         }
         return "rspc/rule";
@@ -71,9 +71,9 @@ public class Rspc {
      */
     @RequestMapping("schema")
     public String dataModel(ModelMap map){
-        String s = HttpUtils.get(apiHost.concat(schemaUrl), null);
-        if(StringUtils.isNotBlank(s)){
-            map.put("data", JSON.parseObject(s));
+        HttpUtils.HttpRuest httpRuest  = HttpUtils.get(apiHost.concat(schemaUrl).concat("?token=").concat(getAdminUser().getSalt()), null);
+        if(httpRuest.getStatusCode()==200){
+            map.put("data", JSON.parseObject(httpRuest.getEntity()));
         }
         return "rspc/schema";
     }

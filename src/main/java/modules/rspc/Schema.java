@@ -1,7 +1,7 @@
 package modules.rspc;
 
 import com.alibaba.fastjson.JSON;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,11 +30,13 @@ public class Schema  extends BaseAction {
     @ResponseBody
     @RequestMapping("get")
     public ActionResultMap get(){
-        String s = HttpUtils.get(apiHost.concat(Rspc.schemaUrl), null);
-        if(StringUtils.isNotBlank(s)){
+        HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(Rspc.schemaUrl).concat("?token=").concat(getAdminUser().getSalt()), null);
+        if(httpRuest.getStatusCode()==200){
             resultMap.setSuccess(true);
-            resultMap.setData(JSON.parseObject(s));
-        }else {
+            resultMap.setData(JSON.parseObject(httpRuest.getEntity()));
+        }else if(httpRuest.getStatusCode()==403){
+            throw new AuthorizationException();
+        } else {
             resultMap.setSuccess(false);
         }
         return  resultMap;
@@ -44,11 +46,13 @@ public class Schema  extends BaseAction {
     public ActionResultMap update(String body){
         Map map = new HashMap();
         map.put("schema",body);
-        String s = HttpUtils.put(apiHost.concat(Rspc.schemaUrl), JSON.toJSONString(map));
-        if(StringUtils.isNotBlank(s)){
+        HttpUtils.HttpRuest put = HttpUtils.put(apiHost.concat(Rspc.schemaUrl).concat("?tokend=").concat(getAdminUser().getSalt()), JSON.toJSONString(map));
+        if(put.getStatusCode()==200){
             resultMap.setSuccess(true);
-            resultMap.setData(JSON.parseObject(s));
-        }else {
+            resultMap.setData(JSON.parseObject(put.getEntity()));
+        }else if(put.getStatusCode()==403){
+           throw new AuthorizationException();
+        } else {
             resultMap.setSuccess(false);
         }
         return  resultMap;
@@ -58,10 +62,10 @@ public class Schema  extends BaseAction {
     public ActionResultMap save(String body){
         Map map = new HashMap();
         map.put("schema",body);
-        String s = HttpUtils.post(apiHost.concat(Rspc.schemaUrl), JSON.toJSONString(map));
-        if(StringUtils.isNotBlank(s)){
+        HttpUtils.HttpRuest post = HttpUtils.post(apiHost.concat(Rspc.schemaUrl).concat("?token=").concat(getAdminUser().getSalt()), JSON.toJSONString(map));
+        if(post.getStatusCode()==201){
             resultMap.setSuccess(true);
-            resultMap.setData(JSON.parseObject(s));
+            resultMap.setData(JSON.parseObject(post.getEntity()));
         }else {
             resultMap.setSuccess(false);
         }
@@ -70,11 +74,14 @@ public class Schema  extends BaseAction {
     @ResponseBody
     @RequestMapping("dele")
     public ActionResultMap dele(){
-        String s = HttpUtils.delte(apiHost.concat(Rspc.schemaUrl), null);
-        if(StringUtils.isNotBlank(s)){
+        HttpUtils.HttpRuest delte = HttpUtils.delte(apiHost.concat(Rspc.schemaUrl).concat("?token=").concat(getAdminUser().getSalt()), null);
+
+        if(delte.getStatusCode()==204){
             resultMap.setSuccess(true);
-            resultMap.setData(JSON.parseObject(s));
-        }else {
+            resultMap.setData(JSON.parseObject(delte.getEntity()));
+        }else if(delte.getStatusCode()==403){
+            throw new AuthorizationException();
+        } else {
             resultMap.setSuccess(false);
         }
         return  resultMap;

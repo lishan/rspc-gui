@@ -45,8 +45,7 @@ public class BaseAction {
 	    		modelAndView.setViewName(serviceException.getViewPath());
 	    		modelAndView.addObject("msg",serviceException.getMessage());
 	    	}else if(exception instanceof AuthorizationException){
-	    		modelAndView.setViewName("error/403");
-	    		modelAndView.addObject("msg",exception.getMessage());
+				getSubject().logout();
 	    	}
 			return modelAndView;
 	    }

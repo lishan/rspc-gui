@@ -2,6 +2,7 @@ package modules.rspc;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -43,19 +44,28 @@ public class Event extends BaseAction {
         }
         param.put("page_size",pageSize+"");
         param.put("page",(page+1)+"");
-        String s = HttpUtils.get(apiHost.concat(Rspc.eventUrl), param);
-        resultMap.setSuccess(true);
-        resultMap.setData(JSON.parseObject(s));
+        param.put("token",getAdminUser().getSalt());
+        HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(Rspc.eventUrl), param);
+        if(httpRuest.getStatusCode()==200){
+            resultMap.setSuccess(true);
+            resultMap.setData(JSON.parseObject(httpRuest.getEntity()));
+        }else if(httpRuest.getStatusCode()==403){
+            throw new AuthorizationException();
+        } else {
+            resultMap.setSuccess(false);
+        }
         return  resultMap;
     }
     @ResponseBody
     @RequestMapping("statistic")
     public ActionResultMap statistic(){
-        String s = HttpUtils.get(apiHost.concat(Rspc.eventStatisticUrl), null);
-        if(StringUtils.isNotBlank(s)){
+        HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(Rspc.eventStatisticUrl).concat("?token=").concat(getAdminUser().getSalt()), null);
+        if(httpRuest.getStatusCode()==200){
             resultMap.setSuccess(true);
-            resultMap.setData(JSON.parseObject(s));
-        }else{
+            resultMap.setData(JSON.parseObject(httpRuest.getEntity()));
+        }else if(httpRuest.getStatusCode()==403){
+            throw new AuthorizationException();
+        } else {
             resultMap.setSuccess(false);
         }
 
