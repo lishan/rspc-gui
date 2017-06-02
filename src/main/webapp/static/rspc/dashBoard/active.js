@@ -7,10 +7,10 @@ rspcApp.controller('dashBoardContro',['$scope','dataService',function($scope,dat
         };
 
         $scope.taskStart=function(isRunnion){
-            $scope.isRunnion=isRunnion;
             if(isRunnion){
                 dataService.getConfig().success(function(d){
                     if(d.success){
+                        $scope.isRunnion=isRunnion;
                         $scope.configInfo= d.data;
                     }else{
                         $scope.isRunnion=false;
@@ -38,11 +38,15 @@ rspcApp.controller('dashBoardContro',['$scope','dataService',function($scope,dat
         });
 
         function initEcharts(xData,yData){
+            if(xData.length==0&&yData.length==0){
+                $("#u42").text(noData);
+                return;
+            }
             var myChart = echarts.init(document.getElementById('u42'));
             // 指定图表的配置项和数据
             var option = {
                 title: {
-                    text: '24小时告警触发Top10'
+                    text: echartsTitle
                 },
                 grid:{
                   bottom:140
@@ -54,7 +58,7 @@ rspcApp.controller('dashBoardContro',['$scope','dataService',function($scope,dat
                     }
                 },
                 legend: {
-                    data:['告警']
+                    data:[echartsLegend]
                 },
                 xAxis: {
                     data: xData,
@@ -65,7 +69,7 @@ rspcApp.controller('dashBoardContro',['$scope','dataService',function($scope,dat
                 },
                 yAxis: {},
                 series: [{
-                    name: '告警',
+                    name: echartsLegend,
                     type: 'bar',
                     data: yData
                 }]

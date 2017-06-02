@@ -52,8 +52,13 @@ public class Event extends BaseAction {
     @RequestMapping("statistic")
     public ActionResultMap statistic(){
         String s = HttpUtils.get(apiHost.concat(Rspc.eventStatisticUrl), null);
-        resultMap.setSuccess(true);
-        resultMap.setData(JSON.parseObject(s));
+        if(StringUtils.isNotBlank(s)){
+            resultMap.setSuccess(true);
+            resultMap.setData(JSON.parseObject(s));
+        }else{
+            resultMap.setSuccess(false);
+        }
+
         return  resultMap;
     }
 

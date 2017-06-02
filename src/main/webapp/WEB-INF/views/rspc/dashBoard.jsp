@@ -20,6 +20,9 @@
     </style>
     <script type="text/javascript">
     var startFailure= '<spring:message code="dashBoard.task_start_failure"/>';
+    var noData= '<spring:message code="dashBoard.noData"/>';
+    var echartsTitle= '<spring:message code="dashBoard.echarts.title"/>';
+    var echartsLegend= '<spring:message code="dashBoard.echarts.legend"/>';
     </script>
 </head>
 <body>
