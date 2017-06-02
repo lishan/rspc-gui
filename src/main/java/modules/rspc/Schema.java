@@ -46,7 +46,7 @@ public class Schema  extends BaseAction {
     public ActionResultMap update(String body){
         Map map = new HashMap();
         map.put("schema",body);
-        HttpUtils.HttpRuest put = HttpUtils.put(apiHost.concat(Rspc.schemaUrl).concat("?tokend=").concat(getAdminUser().getSalt()), JSON.toJSONString(map));
+        HttpUtils.HttpRuest put = HttpUtils.put(apiHost.concat(Rspc.schemaUrl).concat("?token=").concat(getAdminUser().getSalt()), JSON.toJSONString(map));
         if(put.getStatusCode()==200){
             resultMap.setSuccess(true);
             resultMap.setData(JSON.parseObject(put.getEntity()));
