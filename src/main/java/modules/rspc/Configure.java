@@ -33,10 +33,10 @@ public class Configure extends BaseAction{
         Map<String,String> parma = new HashMap<String,String>();
         parma.put("token",getAdminUser().getSalt());
         HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(Rspc.configUrl), parma);
-        if(httpRuest.getStatusCode()==200){
+        if(httpRuest.getStatusCode()==HttpUtils.SUCCESS){
             resultMap.setSuccess(true);
             resultMap.setData(JSON.parseObject(httpRuest.getEntity()));
-        }else if(httpRuest.getStatusCode()==403){
+        }else if(httpRuest.getStatusCode()==HttpUtils.FORBIDDEN){
             throw new AuthorizationException();
         } else {
             resultMap.setSuccess(false);
@@ -49,10 +49,10 @@ public class Configure extends BaseAction{
     @RequestMapping("update")
     public ActionResultMap update(String body){
         HttpUtils.HttpRuest put = HttpUtils.put(apiHost.concat(Rspc.configUrl).concat("?token=").concat(getAdminUser().getSalt()), body);
-        if(put.getStatusCode()==200){
+        if(put.getStatusCode()==HttpUtils.SUCCESS){
             resultMap.setSuccess(true);
             resultMap.setData(JSON.parseObject(put.getEntity()));
-        }else if(put.getStatusCode()==403){
+        }else if(put.getStatusCode()==HttpUtils.FORBIDDEN){
             throw new AuthorizationException();
         } else {
             resultMap.setSuccess(false);

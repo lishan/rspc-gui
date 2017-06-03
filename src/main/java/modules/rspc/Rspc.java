@@ -2,6 +2,7 @@ package modules.rspc;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -59,9 +60,11 @@ public class Rspc extends BaseAction{
     @RequestMapping("rule")
     public String rule(ModelMap map){
         HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(ruleUrl).concat("?token=").concat(getAdminUser().getSalt()), null);
-        if(httpRuest.getStatusCode()==200){
+        if(httpRuest.getStatusCode()==HttpUtils.SUCCESS){
             JSONObject object = JSON.parseObject(httpRuest.getEntity());
             map.put("rule", object.getString("rules"));
+        }else if(HttpUtils.FORBIDDEN==httpRuest.getStatusCode()){
+            throw new AuthorizationException();
         }
         return "rspc/rule";
     }
@@ -72,8 +75,10 @@ public class Rspc extends BaseAction{
     @RequestMapping("schema")
     public String dataModel(ModelMap map){
         HttpUtils.HttpRuest httpRuest  = HttpUtils.get(apiHost.concat(schemaUrl).concat("?token=").concat(getAdminUser().getSalt()), null);
-        if(httpRuest.getStatusCode()==200){
+        if(httpRuest.getStatusCode()==HttpUtils.SUCCESS){
             map.put("data", JSON.parseObject(httpRuest.getEntity()));
+        }else if(HttpUtils.FORBIDDEN==httpRuest.getStatusCode()){
+            throw new AuthorizationException();
         }
         return "rspc/schema";
     }

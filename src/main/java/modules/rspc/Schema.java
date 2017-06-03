@@ -31,10 +31,10 @@ public class Schema  extends BaseAction {
     @RequestMapping("get")
     public ActionResultMap get(){
         HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(Rspc.schemaUrl).concat("?token=").concat(getAdminUser().getSalt()), null);
-        if(httpRuest.getStatusCode()==200){
+        if(httpRuest.getStatusCode()==HttpUtils.SUCCESS){
             resultMap.setSuccess(true);
             resultMap.setData(JSON.parseObject(httpRuest.getEntity()));
-        }else if(httpRuest.getStatusCode()==403){
+        }else if(httpRuest.getStatusCode()==HttpUtils.FORBIDDEN){
             throw new AuthorizationException();
         } else {
             resultMap.setSuccess(false);
@@ -47,10 +47,10 @@ public class Schema  extends BaseAction {
         Map map = new HashMap();
         map.put("schema",body);
         HttpUtils.HttpRuest put = HttpUtils.put(apiHost.concat(Rspc.schemaUrl).concat("?token=").concat(getAdminUser().getSalt()), JSON.toJSONString(map));
-        if(put.getStatusCode()==200){
+        if(put.getStatusCode()==HttpUtils.SUCCESS){
             resultMap.setSuccess(true);
             resultMap.setData(JSON.parseObject(put.getEntity()));
-        }else if(put.getStatusCode()==403){
+        }else if(put.getStatusCode()==HttpUtils.FORBIDDEN){
            throw new AuthorizationException();
         } else {
             resultMap.setSuccess(false);
@@ -63,7 +63,7 @@ public class Schema  extends BaseAction {
         Map map = new HashMap();
         map.put("schema",body);
         HttpUtils.HttpRuest post = HttpUtils.post(apiHost.concat(Rspc.schemaUrl).concat("?token=").concat(getAdminUser().getSalt()), JSON.toJSONString(map));
-        if(post.getStatusCode()==201){
+        if(post.getStatusCode()==HttpUtils.CREATED){
             resultMap.setSuccess(true);
             resultMap.setData(JSON.parseObject(post.getEntity()));
         }else {
@@ -76,10 +76,10 @@ public class Schema  extends BaseAction {
     public ActionResultMap dele(){
         HttpUtils.HttpRuest delte = HttpUtils.delte(apiHost.concat(Rspc.schemaUrl).concat("?token=").concat(getAdminUser().getSalt()), null);
 
-        if(delte.getStatusCode()==204){
+        if(delte.getStatusCode()==HttpUtils.NO_CONTENT){
             resultMap.setSuccess(true);
             resultMap.setData(JSON.parseObject(delte.getEntity()));
-        }else if(delte.getStatusCode()==403){
+        }else if(delte.getStatusCode()==HttpUtils.FORBIDDEN){
             throw new AuthorizationException();
         } else {
             resultMap.setSuccess(false);

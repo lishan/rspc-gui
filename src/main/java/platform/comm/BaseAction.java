@@ -46,6 +46,7 @@ public class BaseAction {
 	    		modelAndView.addObject("msg",serviceException.getMessage());
 	    	}else if(exception instanceof AuthorizationException){
 				getSubject().logout();
+				modelAndView.setViewName("redirect:/admin/user/toLogin");
 	    	}
 			return modelAndView;
 	    }

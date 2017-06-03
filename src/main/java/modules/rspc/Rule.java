@@ -47,11 +47,11 @@ public class Rule extends BaseAction{
         Map map = new HashMap();
         map.put("token",getAdminUser().getSalt());
         HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(Rspc.ruleUrl), map);
-        if(httpRuest.getStatusCode()==200){
+        if(httpRuest.getStatusCode()==HttpUtils.SUCCESS){
             JSONObject object = JSON.parseObject(httpRuest.getEntity());
             resultMap.setSuccess(true);
             resultMap.setData(object.getString("rules"));
-        }else if(httpRuest.getStatusCode()==403){
+        }else if(httpRuest.getStatusCode()==HttpUtils.FORBIDDEN){
             throw new AuthorizationException();
         } else {
             resultMap.setSuccess(false);
@@ -64,11 +64,11 @@ public class Rule extends BaseAction{
         Map map = new HashMap();
         map.put("rules",body);
         HttpUtils.HttpRuest put = HttpUtils.put(apiHost.concat(Rspc.ruleUrl).concat("?token=").concat(getAdminUser().getSalt()), JSON.toJSONString(map));
-        if(put.getStatusCode()==200){
+        if(put.getStatusCode()==HttpUtils.SUCCESS){
             JSONObject object = JSON.parseObject(put.getEntity());
             resultMap.setSuccess(true);
             resultMap.setData(object.getString("rules"));
-        }else if(put.getStatusCode()==403){
+        }else if(put.getStatusCode()==HttpUtils.FORBIDDEN){
             throw new AuthorizationException();
         } else {
             resultMap.setSuccess(false);
@@ -81,11 +81,11 @@ public class Rule extends BaseAction{
         Map map = new HashMap();
         map.put("rules",body);
         HttpUtils.HttpRuest post = HttpUtils.post(apiHost.concat(Rspc.ruleUrl).concat("?token=").concat(getAdminUser().getSalt()), JSON.toJSONString(map));
-        if(post.getStatusCode()==201){
+        if(post.getStatusCode()==HttpUtils.CREATED){
             JSONObject object = JSON.parseObject(post.getEntity());
             resultMap.setSuccess(true);
             resultMap.setData(object.getString("rules"));
-        }else if(post.getStatusCode()==403){
+        }else if(post.getStatusCode()==HttpUtils.FORBIDDEN){
             throw new AuthorizationException();
         } else {
             resultMap.setSuccess(false);
@@ -96,10 +96,10 @@ public class Rule extends BaseAction{
     @RequestMapping("dele")
     public ActionResultMap dele(){
         HttpUtils.HttpRuest delte = HttpUtils.delte(apiHost.concat(Rspc.ruleUrl), null);
-        if(delte.getStatusCode()==204){
+        if(delte.getStatusCode()==HttpUtils.NO_CONTENT){
             resultMap.setSuccess(true);
             resultMap.setData(JSON.parseObject(delte.getEntity()));
-        }else if(delte.getStatusCode()==403){
+        }else if(delte.getStatusCode()==HttpUtils.FORBIDDEN){
             throw new AuthorizationException();
         } else {
             resultMap.setSuccess(false);

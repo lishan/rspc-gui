@@ -23,6 +23,12 @@ import java.util.Map;
 public class HttpUtils {
     private static Logger logger = Logger.getLogger(HttpUtils.class);
 
+    public static int SUCCESS=200;
+    public static int CREATED =201;
+    public static int ACCEPTED =202;
+    public static int NO_CONTENT =204;
+    public static int FORBIDDEN=403;
+
 
     public static HttpRuest post(String url,String body){
         // 创建默认的httpClient实例.

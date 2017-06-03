@@ -28,7 +28,7 @@ public class AdminUserService {
 	public AdminUser getAdminUser(String userName,String pwd){
 		String token = AuthenticateAdapter.generateToken(userName, pwd);
 		HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(Rspc.loginUrl).concat(token), null);
-		if(httpRuest.getStatusCode()==200){
+		if(httpRuest.getStatusCode()==HttpUtils.SUCCESS){
 			AdminUser adminUser = new AdminUser();
 			adminUser.setUserName(userName);
 			adminUser.setPassword(pwd);

@@ -46,10 +46,10 @@ public class Event extends BaseAction {
         param.put("page",(page+1)+"");
         param.put("token",getAdminUser().getSalt());
         HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(Rspc.eventUrl), param);
-        if(httpRuest.getStatusCode()==200){
+        if(httpRuest.getStatusCode()==HttpUtils.SUCCESS){
             resultMap.setSuccess(true);
             resultMap.setData(JSON.parseObject(httpRuest.getEntity()));
-        }else if(httpRuest.getStatusCode()==403){
+        }else if(httpRuest.getStatusCode()==HttpUtils.FORBIDDEN){
             throw new AuthorizationException();
         } else {
             resultMap.setSuccess(false);
@@ -60,10 +60,10 @@ public class Event extends BaseAction {
     @RequestMapping("statistic")
     public ActionResultMap statistic(){
         HttpUtils.HttpRuest httpRuest = HttpUtils.get(apiHost.concat(Rspc.eventStatisticUrl).concat("?token=").concat(getAdminUser().getSalt()), null);
-        if(httpRuest.getStatusCode()==200){
+        if(httpRuest.getStatusCode()==HttpUtils.SUCCESS){
             resultMap.setSuccess(true);
             resultMap.setData(JSON.parseObject(httpRuest.getEntity()));
-        }else if(httpRuest.getStatusCode()==403){
+        }else if(httpRuest.getStatusCode()==HttpUtils.FORBIDDEN){
             throw new AuthorizationException();
         } else {
             resultMap.setSuccess(false);
